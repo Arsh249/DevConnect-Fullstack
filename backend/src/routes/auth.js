@@ -5,6 +5,13 @@ const { validateSignUpData } = require("../utils/validation");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
+const cookieOptions = {
+  httpOnly: true,
+  secure: true, // Always secure (HTTPS only)
+  sameSite: "None", // Required for cross-site cookies
+  expires: new Date(Date.now() + 8 * 3600000), // 8 hours
+};
+
 authRouter.post("/signup", async (req, res) => {
   try {
     // Validation of data
@@ -27,9 +34,7 @@ authRouter.post("/signup", async (req, res) => {
     const savedUser = await user.save();
     const token = await savedUser.getJWT();
 
-    res.cookie("token", token, {
-      expires: new Date(Date.now() + 8 * 3600000),
-    });
+    res.cookie("token", token, cookieOptions);
 
     res.json({ message: "User Added successfully!", data: savedUser });
   } catch (err) {
@@ -50,9 +55,7 @@ authRouter.post("/login", async (req, res) => {
     if (isPasswordValid) {
       const token = await user.getJWT();
 
-      res.cookie("token", token, {
-        expires: new Date(Date.now() + 8 * 3600000),
-      });
+      res.cookie("token", token, cookieOptions);
       res.send(user);
     } else {
       throw new Error("Invalid credentials");
@@ -64,6 +67,9 @@ authRouter.post("/login", async (req, res) => {
 
 authRouter.post("/logout", async (req, res) => {
   res.cookie("token", null, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
     expires: new Date(Date.now()),
   });
   res.send("Logout Successful!!");
