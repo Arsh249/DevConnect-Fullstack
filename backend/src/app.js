@@ -34,6 +34,10 @@ app.use("/", chatRouter);
 const server = http.createServer(app);
 initializeSocket(server);
 
+app.get("/test", (req, res) => {
+  res.status(200).send("All Ok")
+})
+
 connectDB()
   .then(() => {
     console.log("Database connection established...");
