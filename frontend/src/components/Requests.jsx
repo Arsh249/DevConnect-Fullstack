@@ -36,10 +36,18 @@ const Requests = () => {
   if (!requests) return;
 
   if (requests.length === 0)
-    return <h1 className="flex justify-center my-10">No Requests Found</h1>;
+    return (
+      <div className="flex flex-col items-center justify-center h-48 w-2/4 mx-auto bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white border border-gray-700 rounded-lg shadow-md p-6 my-8">
+        <div className="text-3xl mb-2">📭</div>
+        <h1 className="text-lg font-semibold mb-1">No Requests Found</h1>
+        <p className="text-sm text-gray-300 text-center m-5">
+          Start exploring profiles and send connection requests to build your network! 🚀
+        </p>
+      </div>
+    );
 
   return (
-    <div className="text-center p-6">
+    <div className="text-center p-6 flex flex-col items-center">
       <h1 className="text-bold text-white text-3xl">Connection Requests</h1>
 
       {requests.map((request) => {
@@ -49,7 +57,7 @@ const Requests = () => {
         return (
           <div
             key={_id}
-            className=" flex justify-between items-center m-6 p-4 rounded-lg bg-base-300  mx-auto"
+            className=" flex justify-between items-center m-6 p-4 rounded-lg bg-base-300 w-2/4"
           >
             <div>
               <img

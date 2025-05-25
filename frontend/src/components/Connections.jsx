@@ -26,11 +26,20 @@ const Connections = () => {
 
   if (!connections) return;
 
-  if (connections.length === 0) return <h1 className="flex justify-center my-10">No Connections Found</h1>;
+  if (connections.length === 0)
+    return (
+      <div className="flex flex-col items-center justify-center h-48 w-2/4 mx-auto bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white border border-gray-700 rounded-lg shadow-md p-6 my-8">
+        <div className="text-3xl mb-2">No Connections Found!🔗</div>
+        <h1 className="text-lg font-semibold mb-1">You haven’t connected with anyone yet.</h1>
+        <p className="text-sm text-gray-300 text-center m-5">
+          Start exploring profiles and make your first connection!
+        </p>
+      </div>
+    );
 
   return (
     <div className="text-center my-10">
-      <h1 className="text-bold text-white text-3xl">Connections</h1>
+      <h1 className="text-bold text-white text-3xl m-10">Connections</h1>
 
       {connections.map((connection) => {
         const { _id, firstName, lastName, photoUrl, age, gender, about } =
